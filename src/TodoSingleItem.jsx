@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function TodoSingleItem({ todo, remove, toggle }) {
 
-    const labelId = `checkbox-list-label-${todo.id}`;
+    const labelId = `checkbox-list-label-${todo._id}`;
     return (
         <ListItem
 

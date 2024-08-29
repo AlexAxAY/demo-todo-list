@@ -4,16 +4,22 @@ const mongoose = require('mongoose');
 const Todo = require('./models/modelSchema');
 
 
-mongoose.connect('mongodb://localhost:27017/todo-list');
+mongoose.connect('mongodb://localhost:27017/todo-list')
+  .then(() => {
+    console.log('Connected to MongoDB successfully!');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 
 
 app.use(express.json());
 
-app.get('/api/todo', async (req, res) => {
+app.get('/api/todos', async (req, res) => {
     try {
         const todos = await Todo.find();
-        return res.json(todos);
+        res.json(todos);
 
     } catch (error) {
         console.log(error);
@@ -22,11 +28,11 @@ app.get('/api/todo', async (req, res) => {
 });
 
 
-app.post('/api/todo', async (req, res) => {
+app.post('/api/todos', async (req, res) => {
     try {
-        const newTodo = new Todo({ text: req.body.text })
+        const newTodo = new Todo({ text: req.body.text });
         const savedTodo = await newTodo.save();
-        return res.json(savedTodo);
+        res.json(savedTodo);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error adding list" });
